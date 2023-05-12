@@ -1,17 +1,17 @@
-from Nodes.BinOp import BinOp
-from Nodes.Num import Num
-from Nodes.Var import Var
-from Nodes.ReadInt import ReadInt
-from Nodes.String import String
-from Nodes.Length import Length
-from Nodes.Position import Position
-from Nodes.ReadStr import ReadStr
-from Nodes.UnaryOp import UnaryOp
-from lexerTest import Lexer
-from Nodes.PrintStatement import PrintStatement
-from Nodes.Concatenate import Concatenate
-from Nodes.StatementList import StatementList
-from Nodes.Substring import Substring
+from Nodes.Generic.BinOp import BinOp
+from Nodes.Numeric.Num import Num
+from Nodes.Generic.Var import Var
+from Nodes.Methods.ReadInt import ReadInt
+from Nodes.Methods.String import String
+from Nodes.Numeric.Length import Length
+from Nodes.Numeric.Position import Position
+from Nodes.Methods.ReadStr import ReadStr
+from Nodes.Generic.UnaryOp import UnaryOp
+from Nodes.Methods.PrintStatement import PrintStatement
+from Nodes.Strings.Concatenate import Concatenate
+from Nodes.Generic.StatementList import StatementList
+from Nodes.Methods.Substring import Substring
+from lexer import Lexer
 class Parser:
     def __init__(self, input):
         self.lexer = Lexer(input)
