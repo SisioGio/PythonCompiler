@@ -1,6 +1,6 @@
 from main import Parser
 
-text = """PRINT(position("ALESSIO","IO"))"""
+text = """PRINT(substring("Alessio",2,2))"""
 parser = Parser(text)
 result = parser.parse()
 

@@ -9,11 +9,13 @@ from Nodes.ReadStr import ReadStr
 from Nodes.UnaryOp import UnaryOp
 from lexerTest import Lexer
 from Nodes.PrintStatement import PrintStatement
+from Nodes.Concatenate import Concatenate
 from Nodes.StatementList import StatementList
+from Nodes.Substring import Substring
 class Parser:
     def __init__(self, input):
         self.lexer = Lexer(input)
-        self.current_token = None
+        curr_token = None
         self.vars = {}
         self.advance()
 
@@ -57,7 +59,7 @@ class Parser:
         statements = []
         statement = self.statement()
         statements.append(statement)
-        # if not self.current_token is None:
+        # if not curr_token is None:
         while self.current_token.type == "SEMICOLON":
             self.eat("SEMICOLON")
             next_statement = self.statement()
@@ -129,58 +131,80 @@ class Parser:
         return left
 
     def factor(self):
-        if self.current_token.type == "LPAREN":
+        curr_token = self.current_token
+        if curr_token.type == "LPAREN":
             self.eat("LPAREN")
             expr = self.expr()
             self.eat("RPAREN")
             return expr
-        elif self.current_token.type == "NUM":
-            node = Num(self.current_token)
+        elif curr_token.type == "NUM":
+            node = Num(curr_token)
             self.eat("NUM")
             return node
-        elif self.current_token.type == "IDENT":
+        elif curr_token.type == "IDENT":
             # Get variable from 'vars' dict
             node = self.get_variable()
             self.eat("IDENT")
             return node.value
-        elif self.current_token.type == "READINT":
-            node = ReadInt(self.current_token)
+        elif curr_token.type == "READINT":
+            node = ReadInt(curr_token)
             self.eat("READINT")
             return node
-        elif self.current_token.type == "MINUS":
-            negation_node = self.current_token
+        elif curr_token.type == "MINUS":
+        
             self.eat("MINUS")
-            
             expr= self.factor()
-            node = UnaryOp(negation_node,expr)
+            node = UnaryOp(curr_token,expr)
             return node
-        elif self.current_token.type == "LENGTH":
-            length_node = self.current_token
+        elif curr_token.type == "LENGTH":
+         
             self.eat("LENGTH")
             self.eat("LPAREN")
             node = self.str_expr()
             self.eat("RPAREN")
-            return Length(length_node,node)
-        elif self.current_token.type == "POSITION":
-            position_node = self.current_token
+            return Length(curr_token,node)
+        elif curr_token.type == "POSITION":
+            
             self.eat("POSITION")
             self.eat("LPAREN")
             input_expr = self.str_expr()
             self.eat("COMMA")
             sub_expr = self.str_expr()
             self.eat("RPAREN")
-            node = Position(position_node,input_expr,sub_expr)
+            node = Position(curr_token,input_expr,sub_expr)
             return node
+        if curr_token.type == "CONCATENATE":
+                
+                self.eat("CONCATENATE")
+                self.eat("LPAREN")
+                left = self.str_expr()
+                self.eat("COMMA")
+                right = self.str_expr()
+              
+                self.eat("RPAREN")
+                node = Concatenate(curr_token,left,right)
+                return node
+        if curr_token.type == "SUBSTRING":
+            self.eat("SUBSTRING")
+            self.eat("LPAREN")
+            str_expr = self.str_expr()
+            self.eat("COMMA")
+            start_index = self.expr()
+            self.eat("COMMA")
+            length_expr = self.expr()
+            self.eat("RPAREN")
+            node = Substring(curr_token,str_expr,start_index,length_expr)
+            return  node
         else:
             raise SyntaxError("Invalid syntax")
     
     def get_variable(self):
-        if(not self.current_token.value in self.vars):
+        if(not self.curent_token.value in self.vars):
             # Variable does not exist
-            self.error(f"Undefined variable '{self.current_token.value}'")
+            self.error(f"Undefined variable '{self.curent_token.value}'")
 
         
-        return self.vars[self.current_token.value]
+        return self.vars[self.curent_token.value]
 
     def str_expr(self):
         token = self.current_token
@@ -188,9 +212,10 @@ class Parser:
             node = String(token)
             self.eat("STRING")
             return node
+        
     # # grammar rules for string expressions
     # def str_expr(self):
-        # token = self.current_token
+        # token = curr_token
 
         # if token.type == "STRING":
         #     self.eat("STRING")
