@@ -1,7 +1,10 @@
 class Position:
-    def __init__(self, str_expr1, str_expr2):
-        self.str_expr1 = str_expr1
-        self.str_expr2 = str_expr2
+    def __init__(self, token, input_expr,sub_expr):
+        self.token = token
+        self.input_expr = input_expr
+        self.sub_expr = sub_expr
 
-    def __repr__(self):
-        return f"Position({self.str_expr1}, {self.str_expr2})"
+    def to_dict(self):
+        return {"type":self.token.type,"input_string":self.input_expr.to_dict(),"sub_string":self.sub_expr.to_dict()}
+    def evaluate(self):
+        return self.input_expr.evaluate().find(self.sub_expr.evaluate())

@@ -161,6 +161,16 @@ class Parser:
             node = self.str_expr()
             self.eat("RPAREN")
             return Length(length_node,node)
+        elif self.current_token.type == "POSITION":
+            position_node = self.current_token
+            self.eat("POSITION")
+            self.eat("LPAREN")
+            input_expr = self.str_expr()
+            self.eat("COMMA")
+            sub_expr = self.str_expr()
+            self.eat("RPAREN")
+            node = Position(position_node,input_expr,sub_expr)
+            return node
         else:
             raise SyntaxError("Invalid syntax")
     
@@ -171,82 +181,7 @@ class Parser:
 
         
         return self.vars[self.current_token.value]
-    # # grammar rules for numerical expressions
-    # def num_expr(self):
-    #     node = self.t_num_expr()
 
-    #     while self.current_token.type in ("PLUS", "MINUS"):
-    #         token = self.current_token
-    #         if token.type == "PLUS":
-    #             self.eat("PLUS")
-    #             node = BinOp(left=node, op=token, right=self.t_num_expr())
-    #         elif token.type == "MINUS":
-    #             self.eat("MINUS")
-    #             node = BinOp(left=node, op=token, right=self.t_num_expr())
-
-    #     return node
-
-    # def t_num_expr(self):
-    #     node = self.f_num_expr()
-
-    #     while self.current_token.type in ("MUL", "DIV", "MOD"):
-    #         token = self.current_token
-    #         if token.type == "MUL":
-    #             self.eat("MUL")
-    #             node = BinOp(left=node, op=token, right=self.f_num_expr())
-    #         elif token.type == "DIV":
-    #             self.eat("DIV")
-    #             node = BinOp(left=node, op=token, right=self.f_num_expr())
-    #         elif token.type == "MOD":
-    #             self.eat("MOD")
-    #             node = BinOp(left=node, op=token, right=self.f_num_expr())
-
-    #     return node
-
-    # def f_num_expr(self):
-    #     token = self.current_token
-
-    #     if token.type == "NUM":
-    #         self.eat("NUM")
-    #         return Num(token)
-
-    #     elif token.type == "IDENT":
-    #         self.eat("IDENT")
-    #         return Var(token)
-
-    #     elif token.type == "READINT":
-    #         self.eat("READINT")
-    #         return ReadInt()
-
-    #     elif token.type == "LPAREN":
-    #         self.eat("LPAREN")
-    #         node = self.num_expr()
-    #         self.eat("RPAREN")
-    #         return node
-
-    #     elif token.type == "MINUS":
-    #         self.eat("MINUS")
-    #         node = self.num_expr()
-    #         return UnaryOp(token, node)
-
-    #     elif token.type == "LENGTH":
-    #         self.eat("LENGTH")
-    #         self.eat("LPAREN")
-    #         node = self.str_expr()
-    #         self.eat("RPAREN")
-    #         return Length(token,node)
-
-    #     elif token.type == "POSITION":
-    #         self.eat("POSITION")
-    #         self.eat("LPAREN")
-    #         node1 = self.str_expr()
-    #         self.eat("COMMA")
-    #         node2 = self.str_expr()
-    #         self.eat("RPAREN")
-    #         return Position(node1, node2)
-
-    #     else:
-    #         self.error("NUM, IDENT, READINT, LPAREN, MINUS, LENGTH, POSITION")
     def str_expr(self):
         token = self.current_token
         if token.type == "STRING":
