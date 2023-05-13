@@ -1,5 +1,7 @@
 class Length:
     def __init__(self,token, expr):
+        if type(expr.value) != str:
+            raise SyntaxError(f"Expected str got {type(expr.value)}")
         self.expr = expr
         self.token = token
     def to_dict(self):

@@ -3,8 +3,6 @@ class PrintStatement():
         self.token = token
         self.value = value
 
-    def __repr__(self):
-        return f"PrintStatement({self.value})"
     
     def to_dict(self):
         return {"type": "PRINT", "output":self.value.to_dict()}    

@@ -5,4 +5,4 @@ class ExitControl():
         return { "type":self.token.type}
     def evaluate(self):
         print("Terminating process...")
-        return exit()
+        return exit(1)

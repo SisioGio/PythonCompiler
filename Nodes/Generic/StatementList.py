@@ -1,6 +1,7 @@
 class StatementList:
-    def __init__(self,statements):
+    def __init__(self,statements,name):
         self.statements = statements
+        self.name= name
 
     def append(self, statement):
         self.statements.append(statement)
@@ -9,7 +10,7 @@ class StatementList:
         return iter(self.statements)
 
     def to_dict(self):
-        return {"Program":[(stmt.to_dict()) for stmt in self.statements]}
+        return {self.name:[(stmt.to_dict()) for stmt in self.statements]}
     
     def evaluate(self):
         for statement in self.statements:

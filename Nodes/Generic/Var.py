@@ -3,7 +3,9 @@ class Var:
         self.name = token.value
         self.value = value.evaluate()
         self.type = token.type
+        self.datatype = type(self.value)
         self.children = value
+
     def to_dict(self):
         return {"type": self.type, "name":self.name,"value":self.value,"children":self.children.to_dict() }
     def evaluate(self):

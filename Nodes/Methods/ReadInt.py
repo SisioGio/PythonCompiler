@@ -6,6 +6,6 @@ class ReadInt():
         return {"type": self.token.type }  
     def evaluate(self):
         try:
-            return int(input("\nEnter an integer value and press Enter:\n"))
+            return int(input())
         except ValueError:
             raise Exception("Invalid input: expected an integer")

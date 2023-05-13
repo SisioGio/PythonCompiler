@@ -10,7 +10,7 @@ from .Generic.UnaryOp import UnaryOp
 from .Methods.PrintStatement import PrintStatement
 from .Strings.Concatenate import Concatenate
 from .Generic.StatementList import StatementList
-from .Methods.Substring import Substring
+from .Strings.Substring import Substring
 from .Bool.Not import Not
 from .Bool.StringComparison import StringComparison
 from .Bool.NumComparison import NumComparison

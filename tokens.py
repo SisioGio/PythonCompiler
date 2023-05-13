@@ -1,6 +1,8 @@
 TOKENS = [
 
     ('NUM', r'\d+'),
+        ('TRUE', r'true'),
+    ('FALSE', r'false'),
     ('STRING', r'"[^"]*"'),
     
     ('ASSIGN', r':='),
@@ -15,13 +17,10 @@ TOKENS = [
     ('POSITION', r'position'),
     ('CONCATENATE', r'concatenate'),
     ('SUBSTRING', r'substring'),
-    ('EQUALS', r'=='),
-    ('NOT_EQUALS', r'!='),
     ('AND', r'and'),
     ('OR', r'or'),
     ('NOT', r'not'),
-    ('TRUE', r'true'),
-    ('FALSE', r'false'),
+
     ('LPAREN', r'\('),
     ('RPAREN', r'\)'),
     ('COMMA', r','),
@@ -39,7 +38,8 @@ TOKENS = [
     ('BREAK', r'break'),
     ('CONTINUE', r'continue'),
     ('EXIT', r'exit'),
-    ('NUM_REL', r'=|<>|<|>|<=|>='),
     ('STR_REL', r'==|!='),
+    ('NUM_REL', r'=|<=|<>|>=|<|>'),
+    
     ('IDENT', r'[a-zA-Z_]\w*'),
 ]

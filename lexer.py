@@ -13,6 +13,7 @@ class Lexer:
         self.current_token_index = 0
         self.current_token = None
 
+    # Gets the next token
     def consume(self):
         if(self.current_token_index < len(self.tokens)):
             next_token = self.tokens[self.current_token_index]
@@ -25,7 +26,7 @@ class Lexer:
             token = Token("EOF",'END OF FILE')
             self.current_token = token
             return self.current_token
-    
+    # Reads without consuming the next token
     def peek(self):
         if(self.current_token_index < len(self.tokens)):
 
@@ -35,12 +36,3 @@ class Lexer:
         token = Token("EOF",'END OF FILE')
         self.current_token = token
         return self.current_token
-
-
-
-# lexer = Lexer("2 + 4")
-
-# lexer.consume()
-# lexer.consume()
-# lexer.consume()
-# lexer.consume()
