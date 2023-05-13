@@ -1,8 +1,14 @@
 from main import Parser
 
-text = """PRINT(substring("Alessio",2,2))"""
+text = """for i := 1 to 10 do 
+
+PRINT(i)
+
+
+
+"""
 parser = Parser(text)
 result = parser.parse()
 
-print(result.__str__())
+print(result.to_dict())
 result.evaluate()

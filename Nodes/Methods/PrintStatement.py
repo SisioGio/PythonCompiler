@@ -1,5 +1,6 @@
 class PrintStatement():
-    def __init__(self, value):
+    def __init__(self,token, value):
+        self.token = token
         self.value = value
 
     def __repr__(self):

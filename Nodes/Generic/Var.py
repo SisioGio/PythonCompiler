@@ -3,7 +3,10 @@ class Var:
         self.name = token.value
         self.value = value
         self.type = token.type
+        
     def to_dict(self):
         return {"type": self.type, "name":self.name,"value":self.value.to_dict() }
     def evaluate(self):
         return self.value.evaluate()
+    def increase_by(self,i):
+        self.value = self.value + i

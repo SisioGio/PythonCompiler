@@ -8,7 +8,7 @@ class StatementList:
     def __iter__(self):
         return iter(self.statements)
 
-    def __str__(self):
+    def to_dict(self):
         return {"Program":[(stmt.to_dict()) for stmt in self.statements]}
     
     def evaluate(self):
