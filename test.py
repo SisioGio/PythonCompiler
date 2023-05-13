@@ -1,8 +1,6 @@
 from main import Parser
 
-text = """for i := 1 to 10 do 
-
-PRINT(i)
+text = """exit
 
 
 

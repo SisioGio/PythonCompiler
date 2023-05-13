@@ -1,3 +1,5 @@
+from Nodes.SimpleInstruction.BreakControl import BreakControl
+from Nodes.SimpleInstruction.ContinueControl import ContinueControl
 class ForLoop():
     def __init__(self,token,iterator,limit,instr):
         self.token = token
@@ -10,9 +12,16 @@ class ForLoop():
     
     def evaluate(self):
         for i in range(self.iterator.evaluate(),self.limit.evaluate()):
-            # self.iterator.increase_by(1)
-            if self.instr.token.type == "BREAK":
+            output = self.instr.evaluate()
+            if type(output) == BreakControl:
+                print("break")
                 break
+            elif type(output) == ContinueControl:
+                
+                self.iterator.increase_by(1)
+                continue
             else:
-                self.instr.evaluate()
+                output
+
+            self.iterator.increase_by(1)
       

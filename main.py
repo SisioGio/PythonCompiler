@@ -1,28 +1,6 @@
-from Nodes.Generic.BinOp import BinOp
-from Nodes.Numeric.Num import Num
-from Nodes.Generic.Var import Var
-from Nodes.Methods.ReadInt import ReadInt
-from Nodes.Methods.String import String
-from Nodes.Numeric.Length import Length
-from Nodes.Numeric.Position import Position
-from Nodes.Methods.ReadStr import ReadStr
-from Nodes.Generic.UnaryOp import UnaryOp
-from Nodes.Methods.PrintStatement import PrintStatement
-from Nodes.Strings.Concatenate import Concatenate
-from Nodes.Generic.StatementList import StatementList
-from Nodes.Methods.Substring import Substring
-from Nodes.Bool.Not import Not
-from Nodes.Bool.StringComparison import StringComparison
-from Nodes.Bool.NumComparison import NumComparison
-from Nodes.Bool.Boolean import Boolean
-from Nodes.Bool.Or import Or
+from Nodes import *
+
 from lexer import Lexer
-from Nodes.SimpleInsutruction.ForLoop import ForLoop
-from Nodes.SimpleInsutruction.If import If
-from Nodes.SimpleInsutruction.IfElse import IfElse
-from Nodes.Bool.And import And
-from Nodes.SimpleInsutruction.BeginEnd import BeginEnd
-from Nodes.Generic.Break import Break
 class Parser:
     def __init__(self, input):
         self.lexer = Lexer(input)
@@ -82,6 +60,10 @@ class Parser:
             return self.parse_begin_do_statement()
         elif token_type == "BREAK" :
             return self.parse_break_statement()
+        elif token_type == "CONTINUE":
+            return self.parse_continue_statement()
+        elif token_type == "EXIT":
+            return self.parse_exit_statement()
         elif self.current_token.type == "EOF":
             return None
         else:
@@ -149,7 +131,17 @@ class Parser:
     def parse_break_statement(self):
         token =self.current_token
         self.eat("BREAK")
-        node = Break(token)
+        node = BreakControl(token)
+        return node
+    def parse_continue_statement(self):
+        token = self.current_token
+        self.eat("CONTINUE")
+        node = ContinueControl(token)
+        return node
+    def parse_exit_statement(self):
+        token = self.current_token
+        self.eat("EXIT")
+        node = ExitControl(token)
         return node
     # Checks whatever the next token/var is string
     def is_string_expr(self):
@@ -157,7 +149,7 @@ class Parser:
             return True
         if self.current_token.type == "IDENT":
             var_node = self.get_variable(self.current_token.value)
-            var_value = var_node.value.evaluate()
+            var_value = var_node.value
             if isinstance(var_value,str):
                 return True
         return False
